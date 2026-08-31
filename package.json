@@ -1,13 +1,6 @@
 {
-  "name": "pratix-net-worth-calculator-base-aligned",
-  "version": "1.0.0",
+  "name": "pratix-net-worth-calculator",
   "private": true,
-  "type": "module",
-  "scripts": {
-    "verify": "node scripts/verify.mjs",
-    "test": "node scripts/verify.mjs"
-  },
-  "engines": {
-    "node": ">=20"
-  }
+  "version": "1.0.0",
+  "scripts": {"build": "node scripts/prerender.js", "test": "npm run build && node scripts/verify-prerender.js"}
 }
