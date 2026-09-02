@@ -1,1 +1,226 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Net Worth Calculator | Pratix.io</title><style>:root{--bg:#fafafa;--card:#fff;--text:#18181b;--muted:#71717a;--border:#e4e4e7;--blue:#2563eb;--green:#059669;--red:#dc2626}.dark{--bg:#09090b;--card:#18181b;--text:#f4f4f5;--muted:#a1a1aa;--border:#3f3f46;--blue:#60a5fa;--green:#34d399;--red:#f87171}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--card) 80%,transparent);border-bottom:1px solid var(--border);padding:16px 28px;display:flex;justify-content:space-between;align-items:center}.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--text)}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#6366f1);display:grid;place-items:center;color:white;font-weight:800}button,select,input{font:inherit}.btn,select{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;padding:10px 12px;cursor:pointer}.primary{background:linear-gradient(90deg,#2563eb,#4f46e5);color:white;border:0}header{max-width:900px;margin:auto;text-align:center;padding:60px 20px 32px}h1{font-size:clamp(32px,5vw,54px);margin:12px 0}p{color:var(--muted)}.badge{display:inline-flex;border:1px solid #93c5fd;background:#dbeafe22;color:var(--blue);border-radius:999px;padding:8px 12px;font-size:13px}main{max-width:1180px;margin:auto;padding:20px;display:grid;grid-template-columns:180px 1fr 180px;gap:24px}.ad{height:360px;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 60%,var(--bg));border-radius:22px;display:grid;place-items:center;color:var(--muted);font-size:12px;text-transform:uppercase}.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:22px;margin-bottom:18px;box-shadow:0 10px 25px #00000008}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}input{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--bg);color:var(--text)}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px}.metric b{font-size:20px}svg{width:100%;height:220px}footer,.legal{max-width:900px;margin:20px auto;padding:20px;color:var(--muted)}.legal{background:var(--card);border:1px solid var(--border);border-radius:20px}@media(max-width:900px){main{grid-template-columns:1fr}.ad{display:none}.grid,.summary{grid-template-columns:1fr}}</style></head><body><nav><a class="brand" href="https://pratix.io"><div class="logo">P</div><div><b>Pratix.io</b><div style="font-size:11px;color:var(--muted)">Financial Tools</div></div></a><div style="display:flex;gap:8px"><button class="btn" id="themeBtn">🌙</button><select id="langSelect"><option value="en">EN</option><option value="tr">TR</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option><option value="it">IT</option><option value="nl">NL</option><option value="sv">SV</option><option value="da">DA</option><option value="no">NO</option><option value="fi">FI</option><option value="zh">中文</option></select></div></nav><header><div class="badge">100% Client-Side • Zero-Fetch</div><h1 data-i="title"></h1><p data-i="desc"></p></header><main><aside class="ad" data-i="ad"></aside><section><div class="card"><div class="grid"><div><h3 data-i="assets"></h3><label data-i="cash"></label><input id="cash" type="number" value="12000" min="0" step="100"><label data-i="investments"></label><input id="investments" type="number" value="45000" min="0" step="100"><label data-i="realEstate"></label><input id="realEstate" type="number" value="250000" min="0" step="100"><label data-i="vehicles"></label><input id="vehicles" type="number" value="18000" min="0" step="100"><label data-i="otherAssets"></label><input id="otherAssets" type="number" value="5000" min="0" step="100"></div><div><h3 data-i="liabilities"></h3><label data-i="mortgage"></label><input id="mortgage" type="number" value="180000" min="0" step="100"><label data-i="loans"></label><input id="loans" type="number" value="12000" min="0" step="100"><label data-i="creditCards"></label><input id="creditCards" type="number" value="3500" min="0" step="100"><label data-i="otherDebt"></label><input id="otherDebt" type="number" value="2000" min="0" step="100"></div></div></div><div class="card"><div class="summary"><div class="metric"><span data-i="netWorth"></span><br><b id="net"></b></div><div class="metric"><span data-i="totalAssets"></span><br><b id="ta"></b></div><div class="metric"><span data-i="totalLiabilities"></span><br><b id="tl"></b></div><div class="metric"><span data-i="ratio"></span><br><b id="ra"></b></div></div></div><div class="card"><h3 data-i="chart"></h3><svg id="chart" viewBox="0 0 600 220" role="img"></svg><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" onclick="exportCSV()" data-i="export"></button><button class="btn" onclick="window.print()" data-i="print"></button></div></div></section><aside class="ad" data-i="ad"></aside></main><div class="legal"><h3 data-i="legalTitle"></h3><p data-i="legalBody"></p></div><footer><p data-i="footer"></p></footer><script>const T={"en": {"title": "Net Worth Calculator", "desc": "Track assets, liabilities, and your total net worth instantly.", "assets": "Assets", "liabilities": "Liabilities", "cash": "Cash & Bank", "investments": "Investments", "realEstate": "Real Estate", "vehicles": "Vehicles", "otherAssets": "Other Assets", "mortgage": "Mortgage", "loans": "Loans", "creditCards": "Credit Cards", "otherDebt": "Other Debt", "netWorth": "Net Worth", "totalAssets": "Total Assets", "totalLiabilities": "Total Liabilities", "ratio": "Debt-to-Asset Ratio", "chart": "Net Worth Breakdown", "export": "Export CSV", "print": "Print / PDF", "legalTitle": "Legal Notice", "legalBody": "This calculator is for general informational purposes only and is not financial, legal, tax, or professional advice. Verify results before making decisions.", "footer": "© 2026 Pratix.io. All tools run client-side securely. No data is collected or stored.", "ad": "Advertisement"}, "tr": {"title": "Net Değer Hesaplayıcı", "desc": "Varlıklarınızı, borçlarınızı ve toplam net değerinizi anında takip edin.", "assets": "Varlıklar", "liabilities": "Borçlar", "cash": "Nakit ve Banka", "investments": "Yatırımlar", "realEstate": "Gayrimenkul", "vehicles": "Araçlar", "otherAssets": "Diğer Varlıklar", "mortgage": "Mortgage", "loans": "Krediler", "creditCards": "Kredi Kartları", "otherDebt": "Diğer Borç", "netWorth": "Net Değer", "totalAssets": "Toplam Varlıklar", "totalLiabilities": "Toplam Borçlar", "ratio": "Borç/Varlık Oranı", "chart": "Net Değer Dağılımı", "export": "CSV Dışa Aktar", "print": "Yazdır / PDF", "legalTitle": "Yasal Uyarı", "legalBody": "Bu hesaplayıcı yalnızca genel bilgilendirme amaçlıdır; finansal, hukuki, vergi veya profesyonel tavsiye değildir. Karar almadan önce sonuçları doğrulayın.", "footer": "© 2026 Pratix.io. Tüm araçlar istemci tarafında güvenle çalışır. Veri toplanmaz veya saklanmaz.", "ad": "Reklam"}, "de": {"title": "Nettovermögen-Rechner", "desc": "Verfolgen Sie Vermögenswerte, Verbindlichkeiten und Ihr Nettovermögen sofort.", "assets": "Vermögenswerte", "liabilities": "Verbindlichkeiten", "cash": "Bargeld & Bank", "investments": "Investitionen", "realEstate": "Immobilien", "vehicles": "Fahrzeuge", "otherAssets": "Sonstige Vermögenswerte", "mortgage": "Hypothek", "loans": "Darlehen", "creditCards": "Kreditkarten", "otherDebt": "Sonstige Schulden", "netWorth": "Nettovermögen", "totalAssets": "Gesamtvermögen", "totalLiabilities": "Gesamtverbindlichkeiten", "ratio": "Schulden-zu-Vermögen-Verhältnis", "chart": "Nettovermögen-Aufschlüsselung", "export": "CSV exportieren", "print": "Drucken / PDF", "legalTitle": "Rechtlicher Hinweis", "legalBody": "Dieser Rechner dient nur allgemeinen Informationszwecken und ist keine Finanz-, Rechts-, Steuer- oder Fachberatung. Prüfen Sie Ergebnisse vor Entscheidungen.", "footer": "© 2026 Pratix.io. Alle Tools laufen sicher clientseitig. Es werden keine Daten gesammelt oder gespeichert.", "ad": "Anzeige"}, "fr": {"title": "Calculateur de valeur nette", "desc": "Suivez vos actifs, passifs et votre valeur nette instantanément.", "assets": "Actifs", "liabilities": "Passifs", "cash": "Espèces et banque", "investments": "Investissements", "realEstate": "Immobilier", "vehicles": "Véhicules", "otherAssets": "Autres actifs", "mortgage": "Hypothèque", "loans": "Prêts", "creditCards": "Cartes de crédit", "otherDebt": "Autres dettes", "netWorth": "Valeur nette", "totalAssets": "Total des actifs", "totalLiabilities": "Total des passifs", "ratio": "Ratio dette/actifs", "chart": "Répartition de la valeur nette", "export": "Exporter CSV", "print": "Imprimer / PDF", "legalTitle": "Mentions légales", "legalBody": "Ce calculateur est fourni à titre informatif uniquement et ne constitue pas un conseil financier, juridique, fiscal ou professionnel.", "footer": "© 2026 Pratix.io. Tous les outils fonctionnent côté client en toute sécurité. Aucune donnée n’est collectée ni stockée.", "ad": "Publicité"}, "es": {"title": "Calculadora de patrimonio neto", "desc": "Controle activos, pasivos y su patrimonio neto al instante.", "assets": "Activos", "liabilities": "Pasivos", "cash": "Efectivo y banco", "investments": "Inversiones", "realEstate": "Bienes raíces", "vehicles": "Vehículos", "otherAssets": "Otros activos", "mortgage": "Hipoteca", "loans": "Préstamos", "creditCards": "Tarjetas de crédito", "otherDebt": "Otras deudas", "netWorth": "Patrimonio neto", "totalAssets": "Activos totales", "totalLiabilities": "Pasivos totales", "ratio": "Ratio deuda/activos", "chart": "Desglose del patrimonio neto", "export": "Exportar CSV", "print": "Imprimir / PDF", "legalTitle": "Aviso legal", "legalBody": "Esta calculadora es solo informativa y no constituye asesoramiento financiero, legal, fiscal o profesional.", "footer": "© 2026 Pratix.io. Todas las herramientas se ejecutan de forma segura en el cliente. No se recopilan ni almacenan datos.", "ad": "Anuncio"}, "it": {"title": "Calcolatore del patrimonio netto", "desc": "Monitora attività, passività e patrimonio netto istantaneamente.", "assets": "Attività", "liabilities": "Passività", "cash": "Contanti e banca", "investments": "Investimenti", "realEstate": "Immobili", "vehicles": "Veicoli", "otherAssets": "Altre attività", "mortgage": "Mutuo", "loans": "Prestiti", "creditCards": "Carte di credito", "otherDebt": "Altri debiti", "netWorth": "Patrimonio netto", "totalAssets": "Totale attività", "totalLiabilities": "Totale passività", "ratio": "Rapporto debito/attività", "chart": "Ripartizione patrimonio netto", "export": "Esporta CSV", "print": "Stampa / PDF", "legalTitle": "Avviso legale", "legalBody": "Questo calcolatore è solo informativo e non costituisce consulenza finanziaria, legale, fiscale o professionale.", "footer": "© 2026 Pratix.io. Tutti gli strumenti funzionano in modo sicuro lato client. Nessun dato viene raccolto o archiviato.", "ad": "Pubblicità"}, "nl": {"title": "Nettovermogencalculator", "desc": "Volg activa, passiva en uw totale nettovermogen direct.", "assets": "Activa", "liabilities": "Passiva", "cash": "Contant & bank", "investments": "Investeringen", "realEstate": "Vastgoed", "vehicles": "Voertuigen", "otherAssets": "Overige activa", "mortgage": "Hypotheek", "loans": "Leningen", "creditCards": "Creditcards", "otherDebt": "Overige schulden", "netWorth": "Nettovermogen", "totalAssets": "Totale activa", "totalLiabilities": "Totale passiva", "ratio": "Schuld-activa ratio", "chart": "Verdeling nettovermogen", "export": "CSV exporteren", "print": "Afdrukken / PDF", "legalTitle": "Juridische kennisgeving", "legalBody": "Deze calculator is alleen voor algemene informatie en is geen financieel, juridisch, fiscaal of professioneel advies.", "footer": "© 2026 Pratix.io. Alle tools draaien veilig client-side. Er worden geen gegevens verzameld of opgeslagen.", "ad": "Advertentie"}, "sv": {"title": "Kalkylator för nettoförmögenhet", "desc": "Spåra tillgångar, skulder och din nettoförmögenhet direkt.", "assets": "Tillgångar", "liabilities": "Skulder", "cash": "Kontanter & bank", "investments": "Investeringar", "realEstate": "Fastigheter", "vehicles": "Fordon", "otherAssets": "Övriga tillgångar", "mortgage": "Bolån", "loans": "Lån", "creditCards": "Kreditkort", "otherDebt": "Övriga skulder", "netWorth": "Nettoförmögenhet", "totalAssets": "Totala tillgångar", "totalLiabilities": "Totala skulder", "ratio": "Skuld/tillgång-kvot", "chart": "Fördelning av nettoförmögenhet", "export": "Exportera CSV", "print": "Skriv ut / PDF", "legalTitle": "Juridiskt meddelande", "legalBody": "Denna kalkylator är endast för allmän information och är inte finansiell, juridisk, skatte- eller professionell rådgivning.", "footer": "© 2026 Pratix.io. Alla verktyg körs säkert på klientsidan. Inga data samlas in eller lagras.", "ad": "Annons"}, "da": {"title": "Nettoformueberegner", "desc": "Spor aktiver, passiver og din nettoformue med det samme.", "assets": "Aktiver", "liabilities": "Passiver", "cash": "Kontanter & bank", "investments": "Investeringer", "realEstate": "Fast ejendom", "vehicles": "Køretøjer", "otherAssets": "Andre aktiver", "mortgage": "Realkredit", "loans": "Lån", "creditCards": "Kreditkort", "otherDebt": "Anden gæld", "netWorth": "Nettoformue", "totalAssets": "Samlede aktiver", "totalLiabilities": "Samlede passiver", "ratio": "Gæld/aktiv-forhold", "chart": "Nettoformuefordeling", "export": "Eksportér CSV", "print": "Udskriv / PDF", "legalTitle": "Juridisk meddelelse", "legalBody": "Denne beregner er kun til generel information og er ikke finansiel, juridisk, skattemæssig eller professionel rådgivning.", "footer": "© 2026 Pratix.io. Alle værktøjer kører sikkert på klientsiden. Ingen data indsamles eller gemmes.", "ad": "Annonce"}, "no": {"title": "Nettoformuekalkulator", "desc": "Spor eiendeler, gjeld og nettoformue umiddelbart.", "assets": "Eiendeler", "liabilities": "Gjeld", "cash": "Kontanter og bank", "investments": "Investeringer", "realEstate": "Eiendom", "vehicles": "Kjøretøy", "otherAssets": "Andre eiendeler", "mortgage": "Boliglån", "loans": "Lån", "creditCards": "Kredittkort", "otherDebt": "Annen gjeld", "netWorth": "Nettoformue", "totalAssets": "Totale eiendeler", "totalLiabilities": "Total gjeld", "ratio": "Gjeld/eiendel-forhold", "chart": "Nettoformuefordeling", "export": "Eksporter CSV", "print": "Skriv ut / PDF", "legalTitle": "Juridisk merknad", "legalBody": "Denne kalkulatoren er kun til generell informasjon og er ikke finansiell, juridisk, skatte- eller profesjonell rådgivning.", "footer": "© 2026 Pratix.io. Alle verktøy kjører sikkert på klientsiden. Ingen data samles inn eller lagres.", "ad": "Annonse"}, "fi": {"title": "Nettovarallisuuslaskuri", "desc": "Seuraa varoja, velkoja ja nettovarallisuutta heti.", "assets": "Varat", "liabilities": "Velat", "cash": "Käteinen ja pankki", "investments": "Sijoitukset", "realEstate": "Kiinteistöt", "vehicles": "Ajoneuvot", "otherAssets": "Muut varat", "mortgage": "Asuntolaina", "loans": "Lainat", "creditCards": "Luottokortit", "otherDebt": "Muut velat", "netWorth": "Nettovarallisuus", "totalAssets": "Varat yhteensä", "totalLiabilities": "Velat yhteensä", "ratio": "Velka/varat-suhde", "chart": "Nettovarallisuuden jakauma", "export": "Vie CSV", "print": "Tulosta / PDF", "legalTitle": "Oikeudellinen huomautus", "legalBody": "Tämä laskuri on vain yleistä tietoa varten eikä ole taloudellista, oikeudellista, vero- tai ammatillista neuvontaa.", "footer": "© 2026 Pratix.io. Kaikki työkalut toimivat turvallisesti selaimessa. Tietoja ei kerätä eikä tallenneta.", "ad": "Mainos"}, "zh": {"title": "净资产计算器", "desc": "即时跟踪资产、负债和您的总净资产。", "assets": "资产", "liabilities": "负债", "cash": "现金与银行", "investments": "投资", "realEstate": "房地产", "vehicles": "车辆", "otherAssets": "其他资产", "mortgage": "抵押贷款", "loans": "贷款", "creditCards": "信用卡", "otherDebt": "其他债务", "netWorth": "净资产", "totalAssets": "总资产", "totalLiabilities": "总负债", "ratio": "债务资产比", "chart": "净资产构成", "export": "导出 CSV", "print": "打印 / PDF", "legalTitle": "法律声明", "legalBody": "此计算器仅供一般信息参考，并非财务、法律、税务或专业建议。做出决定前请核实结果。", "footer": "© 2026 Pratix.io。所有工具均在客户端安全运行。不会收集或存储数据。", "ad": "广告"}};let lang=localStorage.lang||'en';let dark=localStorage.theme==='dark';const ids=['cash','investments','realEstate','vehicles','otherAssets','mortgage','loans','creditCards','otherDebt'];function tr(k){return (T[lang]&&T[lang][k])||T.en[k]||k}function applyLang(){document.documentElement.lang=lang;document.getElementById('langSelect').value=lang;document.querySelectorAll('[data-i]').forEach(e=>e.textContent=tr(e.dataset.i));calc()}function money(n){return new Intl.NumberFormat(lang,{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n)}function val(id){return Math.max(0,Number(document.getElementById(id).value)||0)}function calc(){let assets=['cash','investments','realEstate','vehicles','otherAssets'].reduce((s,i)=>s+val(i),0), liab=['mortgage','loans','creditCards','otherDebt'].reduce((s,i)=>s+val(i),0), net=assets-liab;ta.textContent=money(assets);tl.textContent=money(liab);document.getElementById('net').textContent=money(net);ra.textContent=assets?((liab/assets)*100).toFixed(1)+'%':'0%';draw(assets,liab,net)}function draw(a,l,n){let max=Math.max(a,l,Math.abs(n),1),aw=a/max*420,lw=l/max*420,nw=Math.abs(n)/max*420,col=n>=0?'var(--green)':'var(--red)';chart.innerHTML='<text x="10" y="30" fill="var(--muted)">'+tr('totalAssets')+'</text><rect x="160" y="14" width="'+aw+'" height="28" rx="8" fill="var(--green)"/><text x="'+(170+aw)+'" y="34" fill="var(--text)">'+money(a)+'</text><text x="10" y="90" fill="var(--muted)">'+tr('totalLiabilities')+'</text><rect x="160" y="74" width="'+lw+'" height="28" rx="8" fill="var(--red)"/><text x="'+(170+lw)+'" y="94" fill="var(--text)">'+money(l)+'</text><text x="10" y="150" fill="var(--muted)">'+tr('netWorth')+'</text><rect x="160" y="134" width="'+nw+'" height="28" rx="8" fill="'+col+'"/><text x="'+(170+nw)+'" y="154" fill="var(--text)">'+money(n)+'</text>'}function exportCSV(){let rows=[['Item','Value'],...ids.map(i=>[tr(i),val(i)]),[tr('netWorth'),document.getElementById('net').textContent]];let csv=rows.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(',')).join('\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='net-worth.csv';a.click();URL.revokeObjectURL(a.href)}document.getElementById('langSelect').onchange=e=>{lang=e.target.value;localStorage.lang=lang;applyLang()};document.getElementById('themeBtn').onclick=()=>{dark=!dark;localStorage.theme=dark?'dark':'light';applyTheme()};function applyTheme(){document.documentElement.classList.toggle('dark',dark);themeBtn.textContent=dark?'☀️':'🌙'}ids.forEach(i=>document.getElementById(i).addEventListener('input',calc));applyTheme();applyLang();</script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Net Worth Calculator | Pratix.io</title><style>:root{--bg:#fafafa;--card:#fff;--text:#18181b;--muted:#71717a;--border:#e4e4e7;--blue:#2563eb;--green:#059669;--red:#dc2626}.dark{--bg:#09090b;--card:#18181b;--text:#f4f4f5;--muted:#a1a1aa;--border:#3f3f46;--blue:#60a5fa;--green:#34d399;--red:#f87171}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--card) 80%,transparent);border-bottom:1px solid var(--border);padding:16px 28px;display:flex;justify-content:space-between;align-items:center}.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--text)}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#6366f1);display:grid;place-items:center;color:white;font-weight:800}button,select,input{font:inherit}.btn,select{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;padding:10px 12px;cursor:pointer}.primary{background:linear-gradient(90deg,#2563eb,#4f46e5);color:white;border:0}header{max-width:900px;margin:auto;text-align:center;padding:60px 20px 32px}h1{font-size:clamp(32px,5vw,54px);margin:12px 0}p{color:var(--muted)}.badge{display:inline-flex;border:1px solid #93c5fd;background:#dbeafe22;color:var(--blue);border-radius:999px;padding:8px 12px;font-size:13px}main{max-width:1180px;margin:auto;padding:20px;display:grid;grid-template-columns:180px 1fr 180px;gap:24px}.ad{height:360px;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 60%,var(--bg));border-radius:22px;display:grid;place-items:center;color:var(--muted);font-size:12px;text-transform:uppercase}.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:22px;margin-bottom:18px;box-shadow:0 10px 25px #00000008}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}input{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--bg);color:var(--text)}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px}.metric b{font-size:20px}svg{width:100%;height:220px}footer,.legal{max-width:900px;margin:20px auto;padding:20px;color:var(--muted)}.legal{background:var(--card);border:1px solid var(--border);border-radius:20px}@media(max-width:900px){main{grid-template-columns:1fr}.ad{display:none}.grid,.summary{grid-template-columns:1fr}}</style><style id="pratix-standardization">
+/* Pratix.io shared visual language — visual-only overrides. */
+:root {
+  --pratix-blue: #2563eb;
+  --pratix-blue-dark: #1d4ed8;
+  --pratix-ink: #0f172a;
+  --pratix-muted: #64748b;
+  --pratix-bg: #f8fafc;
+  --pratix-surface: #ffffff;
+  --pratix-border: #e2e8f0;
+  --pratix-soft: #eff6ff;
+  --pratix-radius: 18px;
+  --pratix-radius-sm: 12px;
+  --pratix-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --pratix-shadow-lg: 0 16px 38px rgba(15, 23, 42, 0.08);
+}
+
+html { background: var(--pratix-bg); }
+
+body {
+  background-color: var(--pratix-bg) !important;
+  color: var(--pratix-ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Shared navigation and brand treatment. */
+nav.sticky,
+nav.nav,
+header.sticky,
+header.nav,
+header.top {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: var(--pratix-border) !important;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+  backdrop-filter: blur(16px);
+}
+
+.brand,
+.brand-title,
+.brand-text,
+nav a:first-child,
+header a:first-child {
+  color: var(--pratix-ink);
+}
+
+.brand-mark,
+.brand-icon,
+header a:first-child > span:first-child,
+nav a:first-child > span:first-child {
+  border-radius: var(--pratix-radius-sm) !important;
+}
+
+nav select,
+header select,
+nav button,
+header button,
+.nav-actions .btn,
+.header-actions .btn {
+  border-radius: var(--pratix-radius-sm) !important;
+  border-color: var(--pratix-border) !important;
+}
+
+/* One button hierarchy across tools. */
+button,
+a.btn,
+.btn,
+button[class*="rounded-"],
+a[class*="rounded-"] {
+  border-radius: var(--pratix-radius-sm);
+}
+
+.btn-primary,
+button.primary,
+button[class*="bg-blue-600"],
+a[class*="bg-blue-600"] {
+  background: var(--pratix-blue) !important;
+  border-color: var(--pratix-blue) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.18);
+}
+
+.btn-primary:hover,
+button.primary:hover,
+button[class*="bg-blue-600"]:hover,
+a[class*="bg-blue-600"]:hover {
+  background: var(--pratix-blue-dark) !important;
+}
+
+.btn-secondary,
+.btn-ghost,
+button.secondary,
+button[class*="border-"],
+a[class*="border-"] {
+  border-color: var(--pratix-border) !important;
+}
+
+/* Consistent controls without touching checkboxes, radios, ranges or file inputs. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+select,
+textarea {
+  border-radius: var(--pratix-radius-sm) !important;
+  border-color: #cbd5e1 !important;
+  background-color: #fff !important;
+  color: var(--pratix-ink);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--pratix-blue) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12) !important;
+  outline: none !important;
+}
+
+/* Shared surface language for cards, forms, metrics and output panels. */
+.card,
+.panel,
+.form-card,
+.formCard,
+.results-card,
+.metric,
+.feature-card,
+section[class*="rounded-[2rem]"],
+section[class*="rounded-3xl"] {
+  border-color: var(--pratix-border) !important;
+  border-radius: var(--pratix-radius) !important;
+  box-shadow: var(--pratix-shadow);
+}
+
+/* Shared advertising placeholder treatment. */
+.ad,
+.ad-slot,
+.ad-placeholder,
+[class*="ad-placeholder"] {
+  border-color: #cbd5e1 !important;
+  border-radius: var(--pratix-radius) !important;
+  background-color: #f8fafc !important;
+  color: #64748b !important;
+}
+
+/* Remove decorative page-specific grids so tool pages share the main site's calm canvas. */
+.soft-grid,
+.bg-grid-pattern {
+  background-image: none !important;
+}
+
+/* Tables and lower-page content follow the same quiet surface rhythm. */
+table {
+  border-color: var(--pratix-border);
+}
+
+thead,
+th {
+  color: var(--pratix-ink);
+}
+
+tbody tr {
+  border-color: var(--pratix-border);
+}
+
+footer {
+  border-color: var(--pratix-border) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: var(--pratix-muted) !important;
+}
+
+/* Preserve existing dark-theme behavior while aligning its surfaces. */
+body.dark,
+body:has(nav.nav):not(.light) {
+  --pratix-bg: #0f172a;
+  --pratix-surface: #111827;
+  --pratix-border: #334155;
+  --pratix-ink: #e2e8f0;
+  --pratix-muted: #94a3b8;
+  background-color: var(--pratix-bg) !important;
+  color: var(--pratix-ink);
+}
+
+body.dark nav,
+body.dark header,
+body:has(nav.nav):not(.light) nav,
+body:has(nav.nav):not(.light) header {
+  background: rgba(15, 23, 42, 0.92) !important;
+  border-color: var(--pratix-border) !important;
+}
+
+body.dark .card,
+body.dark .panel,
+body.dark .form-card,
+body.dark .formCard,
+body.dark .results-card,
+body.dark section[class*="rounded-[2rem]"],
+body.dark section[class*="rounded-3xl"],
+body:has(nav.nav):not(.light) .card,
+body:has(nav.nav):not(.light) .panel,
+body:has(nav.nav):not(.light) section[class*="rounded-[2rem]"],
+body:has(nav.nav):not(.light) section[class*="rounded-3xl"] {
+  background-color: var(--pratix-surface) !important;
+  border-color: var(--pratix-border) !important;
+  box-shadow: none;
+}
+
+body.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+body.dark select,
+body.dark textarea,
+body:has(nav.nav):not(.light) input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+body:has(nav.nav):not(.light) select,
+body:has(nav.nav):not(.light) textarea {
+  background-color: #1e293b !important;
+  border-color: #475569 !important;
+  color: #e2e8f0;
+}
+
+body.dark footer,
+body:has(nav.nav):not(.light) footer {
+  background: rgba(15, 23, 42, 0.86) !important;
+  color: var(--pratix-muted) !important;
+}
+
+@media (max-width: 720px) {
+  main { width: min(100% - 24px, 1180px); }
+  .hero-grid { gap: 24px !important; }
+}
+
+</style>
+</head><body><nav><a class="brand" href="https://pratix.io"><div class="logo">P</div><div><b>Pratix.io</b><div style="font-size:11px;color:var(--muted)">Financial Tools</div></div></a><div style="display:flex;gap:8px"><button class="btn" id="themeBtn">🌙</button><select id="langSelect"><option value="en">EN</option><option value="tr">TR</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option><option value="it">IT</option><option value="nl">NL</option><option value="sv">SV</option><option value="da">DA</option><option value="no">NO</option><option value="fi">FI</option><option value="zh">中文</option></select></div></nav><header><div class="badge">100% Client-Side • Zero-Fetch</div><h1 data-i="title"></h1><p data-i="desc"></p></header><main><aside class="ad" data-i="ad"></aside><section><div class="card"><div class="grid"><div><h3 data-i="assets"></h3><label data-i="cash"></label><input id="cash" type="number" value="12000" min="0" step="100"><label data-i="investments"></label><input id="investments" type="number" value="45000" min="0" step="100"><label data-i="realEstate"></label><input id="realEstate" type="number" value="250000" min="0" step="100"><label data-i="vehicles"></label><input id="vehicles" type="number" value="18000" min="0" step="100"><label data-i="otherAssets"></label><input id="otherAssets" type="number" value="5000" min="0" step="100"></div><div><h3 data-i="liabilities"></h3><label data-i="mortgage"></label><input id="mortgage" type="number" value="180000" min="0" step="100"><label data-i="loans"></label><input id="loans" type="number" value="12000" min="0" step="100"><label data-i="creditCards"></label><input id="creditCards" type="number" value="3500" min="0" step="100"><label data-i="otherDebt"></label><input id="otherDebt" type="number" value="2000" min="0" step="100"></div></div></div><div class="card"><div class="summary"><div class="metric"><span data-i="netWorth"></span><br><b id="net"></b></div><div class="metric"><span data-i="totalAssets"></span><br><b id="ta"></b></div><div class="metric"><span data-i="totalLiabilities"></span><br><b id="tl"></b></div><div class="metric"><span data-i="ratio"></span><br><b id="ra"></b></div></div></div><div class="card"><h3 data-i="chart"></h3><svg id="chart" viewBox="0 0 600 220" role="img"></svg><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" onclick="exportCSV()" data-i="export"></button><button class="btn" onclick="window.print()" data-i="print"></button></div></div></section><aside class="ad" data-i="ad"></aside></main><div class="legal"><h3 data-i="legalTitle"></h3><p data-i="legalBody"></p></div><footer><p data-i="footer"></p></footer><script>const T={"en": {"title": "Net Worth Calculator", "desc": "Track assets, liabilities, and your total net worth instantly.", "assets": "Assets", "liabilities": "Liabilities", "cash": "Cash & Bank", "investments": "Investments", "realEstate": "Real Estate", "vehicles": "Vehicles", "otherAssets": "Other Assets", "mortgage": "Mortgage", "loans": "Loans", "creditCards": "Credit Cards", "otherDebt": "Other Debt", "netWorth": "Net Worth", "totalAssets": "Total Assets", "totalLiabilities": "Total Liabilities", "ratio": "Debt-to-Asset Ratio", "chart": "Net Worth Breakdown", "export": "Export CSV", "print": "Print / PDF", "legalTitle": "Legal Notice", "legalBody": "This calculator is for general informational purposes only and is not financial, legal, tax, or professional advice. Verify results before making decisions.", "footer": "© 2026 Pratix.io. All tools run client-side securely. No data is collected or stored.", "ad": "Advertisement"}, "tr": {"title": "Net Değer Hesaplayıcı", "desc": "Varlıklarınızı, borçlarınızı ve toplam net değerinizi anında takip edin.", "assets": "Varlıklar", "liabilities": "Borçlar", "cash": "Nakit ve Banka", "investments": "Yatırımlar", "realEstate": "Gayrimenkul", "vehicles": "Araçlar", "otherAssets": "Diğer Varlıklar", "mortgage": "Mortgage", "loans": "Krediler", "creditCards": "Kredi Kartları", "otherDebt": "Diğer Borç", "netWorth": "Net Değer", "totalAssets": "Toplam Varlıklar", "totalLiabilities": "Toplam Borçlar", "ratio": "Borç/Varlık Oranı", "chart": "Net Değer Dağılımı", "export": "CSV Dışa Aktar", "print": "Yazdır / PDF", "legalTitle": "Yasal Uyarı", "legalBody": "Bu hesaplayıcı yalnızca genel bilgilendirme amaçlıdır; finansal, hukuki, vergi veya profesyonel tavsiye değildir. Karar almadan önce sonuçları doğrulayın.", "footer": "© 2026 Pratix.io. Tüm araçlar istemci tarafında güvenle çalışır. Veri toplanmaz veya saklanmaz.", "ad": "Reklam"}, "de": {"title": "Nettovermögen-Rechner", "desc": "Verfolgen Sie Vermögenswerte, Verbindlichkeiten und Ihr Nettovermögen sofort.", "assets": "Vermögenswerte", "liabilities": "Verbindlichkeiten", "cash": "Bargeld & Bank", "investments": "Investitionen", "realEstate": "Immobilien", "vehicles": "Fahrzeuge", "otherAssets": "Sonstige Vermögenswerte", "mortgage": "Hypothek", "loans": "Darlehen", "creditCards": "Kreditkarten", "otherDebt": "Sonstige Schulden", "netWorth": "Nettovermögen", "totalAssets": "Gesamtvermögen", "totalLiabilities": "Gesamtverbindlichkeiten", "ratio": "Schulden-zu-Vermögen-Verhältnis", "chart": "Nettovermögen-Aufschlüsselung", "export": "CSV exportieren", "print": "Drucken / PDF", "legalTitle": "Rechtlicher Hinweis", "legalBody": "Dieser Rechner dient nur allgemeinen Informationszwecken und ist keine Finanz-, Rechts-, Steuer- oder Fachberatung. Prüfen Sie Ergebnisse vor Entscheidungen.", "footer": "© 2026 Pratix.io. Alle Tools laufen sicher clientseitig. Es werden keine Daten gesammelt oder gespeichert.", "ad": "Anzeige"}, "fr": {"title": "Calculateur de valeur nette", "desc": "Suivez vos actifs, passifs et votre valeur nette instantanément.", "assets": "Actifs", "liabilities": "Passifs", "cash": "Espèces et banque", "investments": "Investissements", "realEstate": "Immobilier", "vehicles": "Véhicules", "otherAssets": "Autres actifs", "mortgage": "Hypothèque", "loans": "Prêts", "creditCards": "Cartes de crédit", "otherDebt": "Autres dettes", "netWorth": "Valeur nette", "totalAssets": "Total des actifs", "totalLiabilities": "Total des passifs", "ratio": "Ratio dette/actifs", "chart": "Répartition de la valeur nette", "export": "Exporter CSV", "print": "Imprimer / PDF", "legalTitle": "Mentions légales", "legalBody": "Ce calculateur est fourni à titre informatif uniquement et ne constitue pas un conseil financier, juridique, fiscal ou professionnel.", "footer": "© 2026 Pratix.io. Tous les outils fonctionnent côté client en toute sécurité. Aucune donnée n’est collectée ni stockée.", "ad": "Publicité"}, "es": {"title": "Calculadora de patrimonio neto", "desc": "Controle activos, pasivos y su patrimonio neto al instante.", "assets": "Activos", "liabilities": "Pasivos", "cash": "Efectivo y banco", "investments": "Inversiones", "realEstate": "Bienes raíces", "vehicles": "Vehículos", "otherAssets": "Otros activos", "mortgage": "Hipoteca", "loans": "Préstamos", "creditCards": "Tarjetas de crédito", "otherDebt": "Otras deudas", "netWorth": "Patrimonio neto", "totalAssets": "Activos totales", "totalLiabilities": "Pasivos totales", "ratio": "Ratio deuda/activos", "chart": "Desglose del patrimonio neto", "export": "Exportar CSV", "print": "Imprimir / PDF", "legalTitle": "Aviso legal", "legalBody": "Esta calculadora es solo informativa y no constituye asesoramiento financiero, legal, fiscal o profesional.", "footer": "© 2026 Pratix.io. Todas las herramientas se ejecutan de forma segura en el cliente. No se recopilan ni almacenan datos.", "ad": "Anuncio"}, "it": {"title": "Calcolatore del patrimonio netto", "desc": "Monitora attività, passività e patrimonio netto istantaneamente.", "assets": "Attività", "liabilities": "Passività", "cash": "Contanti e banca", "investments": "Investimenti", "realEstate": "Immobili", "vehicles": "Veicoli", "otherAssets": "Altre attività", "mortgage": "Mutuo", "loans": "Prestiti", "creditCards": "Carte di credito", "otherDebt": "Altri debiti", "netWorth": "Patrimonio netto", "totalAssets": "Totale attività", "totalLiabilities": "Totale passività", "ratio": "Rapporto debito/attività", "chart": "Ripartizione patrimonio netto", "export": "Esporta CSV", "print": "Stampa / PDF", "legalTitle": "Avviso legale", "legalBody": "Questo calcolatore è solo informativo e non costituisce consulenza finanziaria, legale, fiscale o professionale.", "footer": "© 2026 Pratix.io. Tutti gli strumenti funzionano in modo sicuro lato client. Nessun dato viene raccolto o archiviato.", "ad": "Pubblicità"}, "nl": {"title": "Nettovermogencalculator", "desc": "Volg activa, passiva en uw totale nettovermogen direct.", "assets": "Activa", "liabilities": "Passiva", "cash": "Contant & bank", "investments": "Investeringen", "realEstate": "Vastgoed", "vehicles": "Voertuigen", "otherAssets": "Overige activa", "mortgage": "Hypotheek", "loans": "Leningen", "creditCards": "Creditcards", "otherDebt": "Overige schulden", "netWorth": "Nettovermogen", "totalAssets": "Totale activa", "totalLiabilities": "Totale passiva", "ratio": "Schuld-activa ratio", "chart": "Verdeling nettovermogen", "export": "CSV exporteren", "print": "Afdrukken / PDF", "legalTitle": "Juridische kennisgeving", "legalBody": "Deze calculator is alleen voor algemene informatie en is geen financieel, juridisch, fiscaal of professioneel advies.", "footer": "© 2026 Pratix.io. Alle tools draaien veilig client-side. Er worden geen gegevens verzameld of opgeslagen.", "ad": "Advertentie"}, "sv": {"title": "Kalkylator för nettoförmögenhet", "desc": "Spåra tillgångar, skulder och din nettoförmögenhet direkt.", "assets": "Tillgångar", "liabilities": "Skulder", "cash": "Kontanter & bank", "investments": "Investeringar", "realEstate": "Fastigheter", "vehicles": "Fordon", "otherAssets": "Övriga tillgångar", "mortgage": "Bolån", "loans": "Lån", "creditCards": "Kreditkort", "otherDebt": "Övriga skulder", "netWorth": "Nettoförmögenhet", "totalAssets": "Totala tillgångar", "totalLiabilities": "Totala skulder", "ratio": "Skuld/tillgång-kvot", "chart": "Fördelning av nettoförmögenhet", "export": "Exportera CSV", "print": "Skriv ut / PDF", "legalTitle": "Juridiskt meddelande", "legalBody": "Denna kalkylator är endast för allmän information och är inte finansiell, juridisk, skatte- eller professionell rådgivning.", "footer": "© 2026 Pratix.io. Alla verktyg körs säkert på klientsidan. Inga data samlas in eller lagras.", "ad": "Annons"}, "da": {"title": "Nettoformueberegner", "desc": "Spor aktiver, passiver og din nettoformue med det samme.", "assets": "Aktiver", "liabilities": "Passiver", "cash": "Kontanter & bank", "investments": "Investeringer", "realEstate": "Fast ejendom", "vehicles": "Køretøjer", "otherAssets": "Andre aktiver", "mortgage": "Realkredit", "loans": "Lån", "creditCards": "Kreditkort", "otherDebt": "Anden gæld", "netWorth": "Nettoformue", "totalAssets": "Samlede aktiver", "totalLiabilities": "Samlede passiver", "ratio": "Gæld/aktiv-forhold", "chart": "Nettoformuefordeling", "export": "Eksportér CSV", "print": "Udskriv / PDF", "legalTitle": "Juridisk meddelelse", "legalBody": "Denne beregner er kun til generel information og er ikke finansiel, juridisk, skattemæssig eller professionel rådgivning.", "footer": "© 2026 Pratix.io. Alle værktøjer kører sikkert på klientsiden. Ingen data indsamles eller gemmes.", "ad": "Annonce"}, "no": {"title": "Nettoformuekalkulator", "desc": "Spor eiendeler, gjeld og nettoformue umiddelbart.", "assets": "Eiendeler", "liabilities": "Gjeld", "cash": "Kontanter og bank", "investments": "Investeringer", "realEstate": "Eiendom", "vehicles": "Kjøretøy", "otherAssets": "Andre eiendeler", "mortgage": "Boliglån", "loans": "Lån", "creditCards": "Kredittkort", "otherDebt": "Annen gjeld", "netWorth": "Nettoformue", "totalAssets": "Totale eiendeler", "totalLiabilities": "Total gjeld", "ratio": "Gjeld/eiendel-forhold", "chart": "Nettoformuefordeling", "export": "Eksporter CSV", "print": "Skriv ut / PDF", "legalTitle": "Juridisk merknad", "legalBody": "Denne kalkulatoren er kun til generell informasjon og er ikke finansiell, juridisk, skatte- eller profesjonell rådgivning.", "footer": "© 2026 Pratix.io. Alle verktøy kjører sikkert på klientsiden. Ingen data samles inn eller lagres.", "ad": "Annonse"}, "fi": {"title": "Nettovarallisuuslaskuri", "desc": "Seuraa varoja, velkoja ja nettovarallisuutta heti.", "assets": "Varat", "liabilities": "Velat", "cash": "Käteinen ja pankki", "investments": "Sijoitukset", "realEstate": "Kiinteistöt", "vehicles": "Ajoneuvot", "otherAssets": "Muut varat", "mortgage": "Asuntolaina", "loans": "Lainat", "creditCards": "Luottokortit", "otherDebt": "Muut velat", "netWorth": "Nettovarallisuus", "totalAssets": "Varat yhteensä", "totalLiabilities": "Velat yhteensä", "ratio": "Velka/varat-suhde", "chart": "Nettovarallisuuden jakauma", "export": "Vie CSV", "print": "Tulosta / PDF", "legalTitle": "Oikeudellinen huomautus", "legalBody": "Tämä laskuri on vain yleistä tietoa varten eikä ole taloudellista, oikeudellista, vero- tai ammatillista neuvontaa.", "footer": "© 2026 Pratix.io. Kaikki työkalut toimivat turvallisesti selaimessa. Tietoja ei kerätä eikä tallenneta.", "ad": "Mainos"}, "zh": {"title": "净资产计算器", "desc": "即时跟踪资产、负债和您的总净资产。", "assets": "资产", "liabilities": "负债", "cash": "现金与银行", "investments": "投资", "realEstate": "房地产", "vehicles": "车辆", "otherAssets": "其他资产", "mortgage": "抵押贷款", "loans": "贷款", "creditCards": "信用卡", "otherDebt": "其他债务", "netWorth": "净资产", "totalAssets": "总资产", "totalLiabilities": "总负债", "ratio": "债务资产比", "chart": "净资产构成", "export": "导出 CSV", "print": "打印 / PDF", "legalTitle": "法律声明", "legalBody": "此计算器仅供一般信息参考，并非财务、法律、税务或专业建议。做出决定前请核实结果。", "footer": "© 2026 Pratix.io。所有工具均在客户端安全运行。不会收集或存储数据。", "ad": "广告"}};let lang=localStorage.lang||'en';let dark=localStorage.theme==='dark';const ids=['cash','investments','realEstate','vehicles','otherAssets','mortgage','loans','creditCards','otherDebt'];function tr(k){return (T[lang]&&T[lang][k])||T.en[k]||k}function applyLang(){document.documentElement.lang=lang;document.getElementById('langSelect').value=lang;document.querySelectorAll('[data-i]').forEach(e=>e.textContent=tr(e.dataset.i));calc()}function money(n){return new Intl.NumberFormat(lang,{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n)}function val(id){return Math.max(0,Number(document.getElementById(id).value)||0)}function calc(){let assets=['cash','investments','realEstate','vehicles','otherAssets'].reduce((s,i)=>s+val(i),0), liab=['mortgage','loans','creditCards','otherDebt'].reduce((s,i)=>s+val(i),0), net=assets-liab;ta.textContent=money(assets);tl.textContent=money(liab);document.getElementById('net').textContent=money(net);ra.textContent=assets?((liab/assets)*100).toFixed(1)+'%':'0%';draw(assets,liab,net)}function draw(a,l,n){let max=Math.max(a,l,Math.abs(n),1),aw=a/max*420,lw=l/max*420,nw=Math.abs(n)/max*420,col=n>=0?'var(--green)':'var(--red)';chart.innerHTML='<text x="10" y="30" fill="var(--muted)">'+tr('totalAssets')+'</text><rect x="160" y="14" width="'+aw+'" height="28" rx="8" fill="var(--green)"/><text x="'+(170+aw)+'" y="34" fill="var(--text)">'+money(a)+'</text><text x="10" y="90" fill="var(--muted)">'+tr('totalLiabilities')+'</text><rect x="160" y="74" width="'+lw+'" height="28" rx="8" fill="var(--red)"/><text x="'+(170+lw)+'" y="94" fill="var(--text)">'+money(l)+'</text><text x="10" y="150" fill="var(--muted)">'+tr('netWorth')+'</text><rect x="160" y="134" width="'+nw+'" height="28" rx="8" fill="'+col+'"/><text x="'+(170+nw)+'" y="154" fill="var(--text)">'+money(n)+'</text>'}function exportCSV(){let rows=[['Item','Value'],...ids.map(i=>[tr(i),val(i)]),[tr('netWorth'),document.getElementById('net').textContent]];let csv=rows.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(',')).join('\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='net-worth.csv';a.click();URL.revokeObjectURL(a.href)}document.getElementById('langSelect').onchange=e=>{lang=e.target.value;localStorage.lang=lang;applyLang()};document.getElementById('themeBtn').onclick=()=>{dark=!dark;localStorage.theme=dark?'dark':'light';applyTheme()};function applyTheme(){document.documentElement.classList.toggle('dark',dark);themeBtn.textContent=dark?'☀️':'🌙'}ids.forEach(i=>document.getElementById(i).addEventListener('input',calc));applyTheme();applyLang();</script></body></html>
